@@ -6,21 +6,21 @@ return
 
 Default_L:
     SetTitleMatchMode, RegEx
-    if WinActive("ahk_group ^Explorer$")
+    if WinActive("ahk_group Explorer")
         Send !{Left}
-    else if WinActive("- (Microsoft )?Visual C\+\+")
+    else if WinActive("- (Microsoft )?Visual (C\+\+|Studio)")
         Send ^-
     else if WinActive("ahk_class ^#32770$") && G_ControlExist("SHELLDLL_DefView1")
         ; Possibly a File dialog, so try sending "Back" command.
-        SendMessage, 0x111, 0xA00B ; WM_COMMAND, ID
+        SendMessage 0x111, 0xA00B ; WM_COMMAND, ID
     else
         Send {Browser_Back}
     return
 Default_R:
     SetTitleMatchMode, RegEx
-    if WinActive("ahk_group ^Explorer$")
+    if WinActive("ahk_group Explorer")
         Send !{Right}
-    else if WinActive("- (Microsoft )?Visual C\+\+")
+    else if WinActive("- (Microsoft )?Visual (C\+\+|Studio)")
         Send ^+-
     else
         Send {Browser_Forward}

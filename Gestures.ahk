@@ -55,6 +55,9 @@ SetWorkingDir %A_ScriptDir% ; Set working directory to script's directory for co
 SetBatchLines, -1           ; May improve responsiveness. Shouldn't negatively affect other
                             ; apps as the script sleeps every %m_Interval% ms while active.
 
+; Try to enable per-monitor DPI awareness (requires Windows 10 v1603+).
+DllCall("SetThreadDpiAwarenessContext", "int", -3)
+
 /*
  * Set text labels to be used in other areas
  */
@@ -179,8 +182,10 @@ if m_PenWidth
 }
 
 ; Register hotkeys.
-Hotkey, %m_GestureKey%, GestureKey_Down
-Hotkey, #%m_GestureKey%, ToggleGestureSuspend
+if m_GestureKey {
+    Hotkey, %m_GestureKey%, GestureKey_Down
+    Hotkey, #%m_GestureKey%, ToggleGestureSuspend
+}
 if m_GestureKey2 {
     Hotkey, %m_GestureKey2%, GestureKey_Down
     Hotkey, #%m_GestureKey2%, ToggleGestureSuspend
